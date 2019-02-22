@@ -55,8 +55,5 @@ func (p *Page) Execute(ctx context.Context, client *http.Client) {
 }
 
 func (p *Page) think() {
-	if true {
-		return
-	}
-	time.Sleep(p.ThinkTime.Duration)
+	thinkTime(&p.ThinkTime)
 }

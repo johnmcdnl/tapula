@@ -99,7 +99,7 @@ func (u *User) collectMetrics() []*Metric {
 }
 
 func (u *User) doStutter() {
-	time.Sleep(u.Stutter().Duration)
+	thinkTime(u.Stutter())
 }
 
 func (u *User) MaybeNavigateTo(page *Page) {

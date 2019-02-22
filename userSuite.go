@@ -48,7 +48,8 @@ func (u *UserSuite) Execute() {
 	var wg sync.WaitGroup
 	for _, user := range u.Users {
 		wg.Add(1)
-		time.Sleep(time.Duration(rand.Intn(20)))
+
+		thinkTime(&Duration{time.Duration(rand.Intn(20))})
 
 		go func(wg *sync.WaitGroup, u1 *User) {
 			defer wg.Done()

@@ -57,6 +57,11 @@ func (r *Request) WithDomain(domain string) *Request {
 	return r
 }
 
+func (r *Request) WithPort(port string) *Request {
+	r.Port = port
+	return r
+}
+
 func (r *Request) WithPath(path string) *Request {
 	logrus.Debugln(`(r *Request) WithPath(path string)`)
 
@@ -136,9 +141,4 @@ func (r *Request) Execute(client *http.Client) []byte {
 	}
 
 	return body
-}
-
-func (r *Request) WithPort(port string) *Request {
-	r.Port = port
-	return r
 }
