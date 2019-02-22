@@ -15,7 +15,7 @@ type User struct {
 	TotalRequests     int              `json:"total_requests,omitempty"`
 	EstimatedDuration *Duration        `json:"estimated_duration,omitempty"`
 	Client            *http.Client     `json:"-"`
-	Stutter           func() *Duration `json:"-"`
+	Pause             func() *Duration `json:"-"`
 }
 
 func (u *User) String() string {
@@ -30,7 +30,7 @@ func NewUser(name string) *User {
 		Pages:             []*Page{},
 		Client:            http.DefaultClient,
 		EstimatedDuration: &Duration{0},
-		Stutter: func() *Duration {
+		Pause: func() *Duration {
 			return &Duration{time.Duration(time.Duration(rand.Intn(10)) * time.Second)}
 		},
 	}
@@ -41,7 +41,7 @@ func (u *User) NavigateTo(page *Page) *User {
 
 	u.Pages = append(u.Pages, page)
 	u.TotalRequests = len(u.Pages)
-	u.EstimatedDuration = &Duration{u.EstimatedDuration.Duration + page.ThinkTime.Duration + u.Stutter().Duration}
+	u.EstimatedDuration = &Duration{u.EstimatedDuration.Duration + page.ThinkTime.Duration + u.Pause().Duration}
 
 	return u
 }
@@ -64,7 +64,7 @@ func (u *User) Execute(ctx context.Context) {
 	for _, p := range u.Pages {
 		pageReqCount++
 		p.Execute(context.WithValue(ctx, "pageReqCount", pageReqCount), u.Client)
-		u.doStutter()
+		u.doPause()
 	}
 }
 
@@ -98,8 +98,8 @@ func (u *User) collectMetrics() []*Metric {
 
 }
 
-func (u *User) doStutter() {
-	thinkTime(u.Stutter())
+func (u *User) doPause() {
+	thinkTime(u.Pause())
 }
 
 func (u *User) MaybeNavigateTo(page *Page) {
