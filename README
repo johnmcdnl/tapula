@@ -1,0 +1,3 @@
+tapula is a testing tool that allows users create realistic data loadds for web testing.
+
+By staggering requests per user we get a more realistic idea as to how a site or API will behave under day to day load
