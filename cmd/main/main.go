@@ -25,9 +25,9 @@ const (
 	domain          = "tapula-api"
 	port            = "3333"
 	concurrentUsers = 10
-	task1Items      = 5
-	task2Items      = 5
-	task3Items      = 5
+	task1Items      = 3
+	task2Items      = 3
+	task3Items      = 3
 )
 
 func main() {
